@@ -1,7 +1,7 @@
 export const team = [
-  { name: "Dr. Emma Vermeulen", role: "Huisarts", detail: "Algemene geneeskunde · vrouwengezondheid", image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=85" },
-  { name: "Dr. Thomas Janssens", role: "Huisarts", detail: "Algemene geneeskunde · kleine heelkunde", image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=85" },
-  { name: "Sarah De Smet", role: "Praktijkassistente", detail: "Onthaal · administratie · zorgcoördinatie", image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=900&q=85" },
+  { name: "Dr. Emma Vermeulen", role: "Huisarts", detail: "Algemene geneeskunde", image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=85" },
+  { name: "Dr. Thomas Janssens", role: "Huisarts", detail: "Algemene geneeskunde", image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=900&q=85" },
+  { name: "Sarah De Smet", role: "Praktijkassistente", detail: "Onthaal · administratie", image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?auto=format&fit=crop&w=900&q=85" },
 ];
 
 export const demoPosts = [
