@@ -7,10 +7,10 @@ import { siteConfig } from "@/lib/config";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: { default: "Huisartsenpraktijk Badhuis", template: "%s | Huisartsenpraktijk Badhuis" },
-  description: "Persoonlijke, toegankelijke huisartsenzorg in het hart van de buurt.",
+  description: "Huisartsenpraktijk Badhuis in Sint-Andries, Antwerpen.",
   alternates: { canonical: "/" },
-  openGraph: { title: "Huisartsenpraktijk Badhuis", description: "Zorg dichtbij, met aandacht voor u.", url: "/", siteName: "Huisartsenpraktijk Badhuis", locale: "nl_BE", type: "website" },
-  twitter: { card: "summary_large_image", title: "Huisartsenpraktijk Badhuis", description: "Zorg dichtbij, met aandacht voor u." },
+  openGraph: { title: "Huisartsenpraktijk Badhuis", description: "Huisartsenpraktijk in Sint-Andries, Antwerpen.", url: "/", siteName: "Huisartsenpraktijk Badhuis", locale: "nl_BE", type: "website" },
+  twitter: { card: "summary_large_image", title: "Huisartsenpraktijk Badhuis", description: "Huisartsenpraktijk in Sint-Andries, Antwerpen." },
 };
 
 export const viewport: Viewport = { themeColor: "#506b5a", colorScheme: "light" };

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowUpRight, Clock3, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Clock3, Info, MapPin } from "lucide-react";
 import { BookingLink } from "@/components/booking-link";
 import { demoPosts, team } from "@/lib/content";
 
@@ -33,14 +33,16 @@ export default function Home() {
             <span>Huisartsenpraktijk</span>
             <span>Antwerpen · 2000</span>
           </div>
-          <div className="home-hero-title">
-            <p className="home-kicker">Welkom bij Badhuis</p>
-            <h1>Uw huisarts,<br />gewoon in<br /><em>de buurt.</em></h1>
+          <div className="home-hero-statement">
+            <p className="home-kicker">Huisartsenpraktijk Badhuis</p>
+            <h1>Een huisartsenpraktijk in Sint-Andries, Antwerpen.</h1>
+            <p>De naam van de praktijk verwijst naar het voormalige badhuis dat in dit gebouw gevestigd was. Buurtbewoners konden er vroeger terecht om zich te wassen.</p>
           </div>
-          <div className="home-hero-intro">
-            <p>We zijn een kleinschalige groepspraktijk voor mensen uit de buurt. U kunt bij ons terecht met grote en kleine gezondheidsvragen, altijd met tijd voor een helder gesprek.</p>
+          <div className="home-hero-facts">
+            <p><span>Wijk</span>Sint-Andries</p>
+            <p><span>Adres</span>Badhuisstraat 24<br />2000 Antwerpen</p>
             <Link href="/praktijk" className="home-inline-link">
-              Leer ons kennen <ArrowUpRight size={17} />
+              Over de praktijk <ArrowUpRight size={17} />
             </Link>
           </div>
         </div>
@@ -50,12 +52,12 @@ export default function Home() {
         <div className="container practice-desk-grid">
           <div className="desk-status">
             <span className="desk-dot" />
-            <span><strong>Vandaag bereikbaar</strong>08:00 — 18:00</span>
+            <span><strong>Openingsuren</strong>Ma–vr · 08:00 — 18:00</span>
           </div>
-          <a href="tel:+3235551212" className="desk-item">
-            <Phone size={19} />
-            <span><small>Liever bellen?</small>03 555 12 12</span>
-          </a>
+          <Link href="/info/afspraken" className="desk-item">
+            <Info size={19} />
+            <span><small>Praktische informatie</small>Afspraken</span>
+          </Link>
           <Link href="/contact" className="desk-item">
             <MapPin size={19} />
             <span><small>U vindt ons hier</small>Badhuisstraat 24</span>
@@ -66,12 +68,13 @@ export default function Home() {
 
       <section className="home-manifesto">
         <div className="container manifesto-grid">
-          <p className="home-section-number">01 / Onze praktijk</p>
+          <p className="home-section-number">01 / Praktijkafspraken</p>
           <div>
-            <h2>Goede zorg begint niet bij een dossier, maar bij aandacht.</h2>
-            <div className="manifesto-copy">
-              <p>We luisteren naar wat er speelt, leggen begrijpelijk uit en beslissen samen wat nodig is. Geen overbodige afstand, wel zorgvuldige geneeskunde.</p>
-              <p>Ons vaste team kent de buurt en volgt u doorheen verschillende levensfasen. Zo blijft zorg persoonlijk, ook wanneer uw vraag complexer wordt.</p>
+            <h2>Enkele afspraken voor een vlot verloop van de consultaties.</h2>
+            <div className="practice-rules">
+              <article><span>01</span><div><h3>Kom op tijd</h3><p>Meld u op het afgesproken uur aan in de praktijk.</p></div></article>
+              <article><span>02</span><div><h3>Respect</h3><p>We verwachten een respectvolle omgang met artsen, medewerkers en andere patiënten.</p></div></article>
+              <article><span>03</span><div><h3>Aanvullingen volgen</h3><p>De overige praktijkafspraken worden nog aangevuld.</p></div></article>
             </div>
           </div>
         </div>
@@ -80,7 +83,7 @@ export default function Home() {
       <section className="home-practice-image" aria-label="Een lichte consultatieruimte in de praktijk">
         <div className="container practice-image-wrap">
           <div className="practice-image" />
-          <p><span>Badhuisstraat 24</span>Een rustige plek voor een open gesprek.</p>
+          <p><span>Badhuisstraat 24</span>Huisartsenpraktijk Badhuis · Sint-Andries</p>
         </div>
       </section>
 
@@ -88,13 +91,12 @@ export default function Home() {
         <div className="container home-route-grid">
           <div>
             <p className="home-section-number">02 / Snel naar</p>
-            <h2>Waarmee kunnen we u helpen?</h2>
+            <h2>Praktische informatie</h2>
           </div>
           <nav className="route-list" aria-label="Praktische informatie">
-            <Link href="/info/afspraken"><span>01</span><strong>Afspraken en huisbezoeken</strong><small>Hoe een consultatie verloopt</small><ArrowUpRight /></Link>
-            <Link href="/info/wachtpost"><span>02</span><strong>Hulp buiten de openingsuren</strong><small>De huisartsenwachtpost</small><ArrowUpRight /></Link>
-            <Link href="/info/geconventioneerd"><span>03</span><strong>Tarieven en terugbetaling</strong><small>Wij zijn geconventioneerd</small><ArrowUpRight /></Link>
-            <Link href="/contact"><span>04</span><strong>Route naar de praktijk</strong><small>Adres en bereikbaarheid</small><ArrowUpRight /></Link>
+            <Link href="/info/wachtpost"><span>01</span><strong>Buiten de openingsuren</strong><small>De huisartsenwachtpost</small><ArrowUpRight /></Link>
+            <Link href="/info/geconventioneerd"><span>02</span><strong>Tarieven</strong><small>Geconventioneerde artsen</small><ArrowUpRight /></Link>
+            <Link href="/contact"><span>03</span><strong>Contact en route</strong><small>Adres en bereikbaarheid</small><ArrowUpRight /></Link>
           </nav>
         </div>
       </section>
@@ -102,8 +104,8 @@ export default function Home() {
       <section className="home-team-section">
         <div className="container">
           <div className="home-section-heading">
-            <div><p className="home-section-number">03 / Ons team</p><h2>De mensen die voor u klaarstaan.</h2></div>
-            <Link href="/team" className="home-inline-link">Iedereen bekijken <ArrowUpRight size={17} /></Link>
+            <div><p className="home-section-number">03 / Team</p><h2>Ons team</h2></div>
+            <Link href="/team" className="home-inline-link">Bekijk het team <ArrowUpRight size={17} /></Link>
           </div>
           <div className="home-team-list">
             {team.map((member, index) => (
@@ -123,7 +125,7 @@ export default function Home() {
         <div className="container home-news-grid">
           <div className="news-intro">
             <p className="home-section-number">04 / Van de praktijk</p>
-            <h2>Berichten voor onze patiënten.</h2>
+            <h2>Praktijknieuws</h2>
             <Link href="/nieuws" className="home-inline-link">Alle berichten <ArrowUpRight size={17} /></Link>
           </div>
           <div className="home-news-list">
@@ -141,8 +143,8 @@ export default function Home() {
       <section className="home-closing">
         <div className="container home-closing-grid">
           <Clock3 aria-hidden="true" />
-          <div><p>Een afspraak nodig?</p><h2>Kies online een moment dat voor u past.</h2></div>
-          <BookingLink className="home-closing-link" label="Naar de agenda" />
+          <div><p>Afspraken</p><h2>Maak online een afspraak.</h2></div>
+          <BookingLink className="home-closing-link" label="Open de agenda" />
         </div>
       </section>
     </>

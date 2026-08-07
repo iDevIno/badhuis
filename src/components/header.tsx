@@ -7,7 +7,7 @@ import { BookingLink } from "./booking-link";
 export function Header() {
   const [open, setOpen] = useState(false);
   return <header className="site-header">
-    <div className="topbar"><div className="container topbar-inner"><span>Nieuwe patiënt? Neem eerst telefonisch contact op.</span><a href="tel:+3235551212">03 555 12 12</a></div></div>
+    <div className="topbar"><div className="container topbar-inner"><span>Consultaties enkel op afspraak.</span><Link href="/info/afspraken">Info over afspraken</Link></div></div>
     <div className="container nav-wrap">
       <Link href="/" className="brand" aria-label="Huisartsenpraktijk Badhuis, home"><span className="brand-mark">B</span><span><strong>Huisartsenpraktijk</strong><em>Badhuis</em></span></Link>
       <button className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="hoofdnavigatie" aria-label={open ? "Menu sluiten" : "Menu openen"}>{open ? <X /> : <Menu />}</button>
