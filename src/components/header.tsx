@@ -15,7 +15,7 @@ export function Header() {
         <Link href="/praktijk" onClick={() => setOpen(false)}>De praktijk</Link>
         <Link href="/nieuws" onClick={() => setOpen(false)}>Nieuws</Link>
         <Link href="/team" onClick={() => setOpen(false)}>Team</Link>
-        <div className="nav-dropdown"><button>Info <ChevronDown size={15} aria-hidden="true" /></button><div className="dropdown-menu"><Link href="/info/wachtpost">Wachtpost</Link><Link href="/info/afspraken">Afspraken</Link><Link href="/info/geconventioneerd">Geconventioneerd</Link></div></div>
+        <div className="nav-dropdown"><button>Info <ChevronDown size={15} aria-hidden="true" /></button><div className="dropdown-menu"><Link href="/info/wachtpost">Wachtpost</Link><Link href="/info/afspraken">Afspraken</Link></div></div>
         <Link href="/contact" onClick={() => setOpen(false)}>Contact</Link>
         <BookingLink className="button button-primary nav-cta" label="Afspraak maken" />
       </nav>

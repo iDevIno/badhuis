@@ -8,11 +8,11 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "MedicalClinic",
     name: "Huisartsenpraktijk Badhuis",
-    telephone: "+32 3 555 12 12",
+    telephone: "+32 3 790 12 14",
     email: "info@huisartsenpraktijkbadhuis.be",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Badhuisstraat 24",
+      streetAddress: "Pachtstraat 16",
       postalCode: "2000",
       addressLocality: "Antwerpen",
       addressCountry: "BE",
@@ -35,12 +35,11 @@ export default function Home() {
           </div>
           <div className="home-hero-statement">
             <p className="home-kicker">Huisartsenpraktijk Badhuis</p>
-            <h1>Een huisartsenpraktijk in Sint-Andries, Antwerpen.</h1>
-            <p>De naam van de praktijk verwijst naar het voormalige badhuis dat in dit gebouw gevestigd was. Buurtbewoners konden er vroeger terecht om zich te wassen.</p>
+            <h1>Sint-Andries, Antwerpen.</h1>
+            <p>Als praktijk zijn we werkzaam in de wijk Sint-Andries in Antwerpen. De naam van de praktijk verwijst naar het badhuis dat hier van 1912 tot 1975 dienstdeed als publieke badkamer.</p>
           </div>
           <div className="home-hero-facts">
-            <p><span>Wijk</span>Sint-Andries</p>
-            <p><span>Adres</span>Badhuisstraat 24<br />2000 Antwerpen</p>
+            <p><span>Adres</span>Pachtstraat 16<br />2000 Antwerpen</p>
             <Link href="/praktijk" className="home-inline-link">
               Over de praktijk <ArrowUpRight size={17} />
             </Link>
@@ -60,7 +59,7 @@ export default function Home() {
           </Link>
           <Link href="/contact" className="desk-item">
             <MapPin size={19} />
-            <span><small>U vindt ons hier</small>Badhuisstraat 24</span>
+            <span><small>U vindt ons hier</small>Pachtstraat 16</span>
           </Link>
           <BookingLink className="desk-booking" label="Plan uw afspraak" />
         </div>
@@ -74,7 +73,8 @@ export default function Home() {
             <div className="practice-rules">
               <article><span>01</span><div><h3>Kom op tijd</h3><p>Meld u op het afgesproken uur aan in de praktijk.</p></div></article>
               <article><span>02</span><div><h3>Respect</h3><p>We verwachten een respectvolle omgang met artsen, medewerkers en andere patiënten.</p></div></article>
-              <article><span>03</span><div><h3>Aanvullingen volgen</h3><p>De overige praktijkafspraken worden nog aangevuld.</p></div></article>
+              <article><span>03</span><div><h3>Attesten en medicatie</h3><p>Deze worden enkel gemaakt tijdens een consultatie. Niet via mail of telefonisch, tenzij anders afgesproken met de betrokken huisarts.</p></div></article>
+              <article><span>04</span><div><h3>Gemiste afspraken</h3><p>Indien u toch verhinderd bent, zeg uw afspraak dan op tijd af. Na drie gemiste afspraken wordt u uitgeschreven uit onze praktijk.</p></div></article>
             </div>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default function Home() {
       <section className="home-practice-image" aria-label="Een lichte consultatieruimte in de praktijk">
         <div className="container practice-image-wrap">
           <div className="practice-image" />
-          <p><span>Badhuisstraat 24</span>Huisartsenpraktijk Badhuis · Sint-Andries</p>
+          <p><span>Pachtstraat 16</span>Huisartsenpraktijk Badhuis · Sint-Andries</p>
         </div>
       </section>
 
@@ -95,7 +95,7 @@ export default function Home() {
           </div>
           <nav className="route-list" aria-label="Praktische informatie">
             <Link href="/info/wachtpost"><span>01</span><strong>Buiten de openingsuren</strong><small>De huisartsenwachtpost</small><ArrowUpRight /></Link>
-            <Link href="/info/geconventioneerd"><span>02</span><strong>Tarieven</strong><small>Geconventioneerde artsen</small><ArrowUpRight /></Link>
+            <Link href="/info/afspraken"><span>02</span><strong>Afspraken</strong><small>Online boeken en praktische informatie</small><ArrowUpRight /></Link>
             <Link href="/contact"><span>03</span><strong>Contact en route</strong><small>Adres en bereikbaarheid</small><ArrowUpRight /></Link>
           </nav>
         </div>
