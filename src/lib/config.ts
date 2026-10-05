@@ -8,7 +8,6 @@ export const siteConfig = {
   address: "Pachtstraat 16, 2000 Antwerpen",
   hours: [
     ["Maandag – vrijdag", "08:00 – 18:00"],
-    ["Telefonisch bereikbaar", "08:00 – 12:00 & 14:00 – 18:00"],
-    ["Weekend", "Gesloten — contacteer de wachtpost"],
+    ["Weekend", "Gesloten"],
   ],
 } as const;
