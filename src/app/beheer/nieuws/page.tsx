@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FilePlus2, LogOut, Pencil } from "lucide-react";
-import { listAdminPosts, logoutAction } from "@/lib/admin-actions";
-export const metadata:Metadata={title:"Nieuwsbeheer",robots:{index:false,follow:false}};export const dynamic="force-dynamic";
-export default async function AdminNews(){const items=await listAdminPosts();return <section className="admin-shell"><div className="admin-container"><div className="admin-head"><div><p className="eyebrow">Beheeromgeving</p><h1>Nieuwsberichten</h1></div><div className="admin-toolbar"><form action={logoutAction}><button className="button button-secondary"><LogOut size={17}/>Uitloggen</button></form><Link className="button button-primary" href="/beheer/nieuws/nieuw"><FilePlus2 size={17}/>Nieuw bericht</Link></div></div>{!process.env.DATABASE_URL&&<div className="notice">Koppel Neon Postgres om berichten op te slaan. De publieke website toont tot dan voorbeeldnieuws.</div>}<div className="admin-table"><div className="admin-row header"><span>Titel</span><span>Status</span><span>Gewijzigd</span><span>Actie</span></div>{items.length?items.map(item=><div className="admin-row" key={item.id}><strong>{item.title}</strong><span className={`status ${item.status}`}>{item.status==="published"?"Gepubliceerd":"Concept"}</span><time>{item.updatedAt.toLocaleDateString("nl-BE")}</time><Link className="text-link" href={`/beheer/nieuws/${item.id}`}><Pencil size={15}/>Bewerken</Link></div>):<div className="empty-state"><h2>Nog geen berichten</h2><p>Maak uw eerste nieuwsbericht aan.</p></div>}</div></div></section>}
+import { Plus } from "lucide-react";
+import { listAdminPosts } from "@/lib/admin-actions";
+import { AdminNewsList } from "@/components/admin-news-list";
+export const metadata: Metadata = { title: "Nieuwsbeheer" };
+export const dynamic = "force-dynamic";
+export default async function AdminNews() {
+  const items = await listAdminPosts();
+  return <section className="admin-shell"><div className="admin-container"><div className="admin-head"><div><h1>Nieuwsberichten</h1><p>Beheer de berichten op de website.</p></div><Link className="button button-primary" href="/beheer/nieuws/nieuw"><Plus size={17} />Nieuw bericht</Link></div>{!process.env.DATABASE_URL && <div className="notice">Opslaan is nog niet beschikbaar: de database is niet gekoppeld. De website toont voorbeeldnieuws.</div>}<AdminNewsList items={items.map(item => ({ id: item.id, title: item.title, status: item.status, updated: item.updatedAt.toLocaleDateString("nl-BE") }))} /></div></section>;
+}

@@ -10,7 +10,7 @@ import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { auth, signIn, signOut } from "@/auth";
 import { getDb } from "@/db";
-import { admins, passwordResetTokens, posts } from "@/db/schema";
+import { admins, passwordResetTokens, posts, siteContent } from "@/db/schema";
 import { siteConfig } from "./config";
 import { slugify } from "./slug";
 
@@ -28,3 +28,18 @@ export async function listAdminPosts(){await requireAdmin();const db=getDb();ret
 export async function getAdminPost(id:string){await requireAdmin();const db=getDb();if(!db)return null;const [post]=await db.select().from(posts).where(eq(posts.id,id)).limit(1);return post||null}
 export async function requestResetAction(_state:ActionState,formData:FormData):Promise<ActionState>{const email=String(formData.get("email")||"").toLowerCase();const db=getDb();if(!db)return {success:"Als dit account bestaat, ontvangt u zo meteen een e-mail."};const [admin]=await db.select().from(admins).where(eq(admins.email,email)).limit(1);if(admin&&process.env.RESEND_API_KEY){const token=randomBytes(32).toString("hex");const hash=createHash("sha256").update(token).digest("hex");await db.insert(passwordResetTokens).values({email,tokenHash:hash,expiresAt:new Date(Date.now()+30*60*1000)});const resend=new Resend(process.env.RESEND_API_KEY);await resend.emails.send({from:process.env.RESEND_FROM||"Badhuis <onboarding@resend.dev>",to:email,subject:"Nieuw wachtwoord instellen",html:`<p>U vroeg een nieuw wachtwoord aan voor Huisartsenpraktijk Badhuis.</p><p><a href="${siteConfig.url}/beheer/wachtwoord-resetten?token=${token}">Stel een nieuw wachtwoord in</a>. Deze link is 30 minuten geldig.</p>`});}return {success:"Als dit account bestaat, ontvangt u zo meteen een e-mail."};}
 export async function resetPasswordAction(_state:ActionState,formData:FormData):Promise<ActionState>{const token=String(formData.get("token")||"");const password=String(formData.get("password")||"");if(password.length<12)return {error:"Gebruik minimaal 12 tekens."};const db=getDb();if(!db)return {error:"De database is nog niet gekoppeld."};const hash=createHash("sha256").update(token).digest("hex");const [record]=await db.select().from(passwordResetTokens).where(and(eq(passwordResetTokens.tokenHash,hash),gt(passwordResetTokens.expiresAt,new Date()),isNull(passwordResetTokens.usedAt))).limit(1);if(!record)return {error:"Deze herstel-link is ongeldig of verlopen."};await db.transaction(async tx=>{await tx.update(admins).set({passwordHash:await bcrypt.hash(password,12),updatedAt:new Date()}).where(eq(admins.email,record.email));await tx.update(passwordResetTokens).set({usedAt:new Date()}).where(eq(passwordResetTokens.id,record.id));});return {success:"Uw wachtwoord is gewijzigd. U kunt nu aanmelden."};}
+
+export async function saveFaqAction(_state: ActionState, formData: FormData): Promise<ActionState> {
+  await requireAdmin();
+  const db = getDb();
+  if (!db) return { error: "De database is nog niet gekoppeld. Er is niets opgeslagen." };
+  const raw = formData.get("items");
+  if (typeof raw !== "string" || raw.length > 200000) return { error: "De FAQ is te groot of ongeldig." };
+  try {
+    const items = z.array(z.object({ question: z.string().trim().min(3).max(200), answer: z.string().trim().min(3).max(5000) })).max(50).parse(JSON.parse(raw));
+    await db.insert(siteContent).values({ key: "faq", items }).onConflictDoUpdate({ target: siteContent.key, set: { items, updatedAt: new Date() } });
+    revalidatePath("/faq");
+    revalidatePath("/beheer/faq");
+    return { success: "De FAQ is opgeslagen en zichtbaar op de website." };
+  } catch { return { error: "Opslaan is niet gelukt. Vul elke vraag en elk antwoord in en probeer opnieuw." }; }
+}

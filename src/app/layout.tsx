@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
+import { SiteChrome } from "@/components/site-chrome";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
@@ -23,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang="nl">
       <body>
-        <a className="skip-link" href="#inhoud">Ga naar de inhoud</a>
-        <Header />
-        <main id="inhoud">{children}</main>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );
