@@ -1,6 +1,6 @@
 "use server";
 import { randomBytes, createHash } from "crypto";
-import { put, del } from "@vercel/blob";
+import { head, del } from "@vercel/blob";
 import { and, desc, eq, gt, isNull } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -13,6 +13,7 @@ import { getDb } from "@/db";
 import { admins, passwordResetTokens, posts, siteContent } from "@/db/schema";
 import { siteConfig } from "./config";
 import { slugify } from "./slug";
+import { validateNewsImage } from "./news-image";
 
 export type ActionState={error?:string;success?:string};
 export async function loginAction(_state:ActionState,formData:FormData):Promise<ActionState>{try{await signIn("credentials",{email:String(formData.get("email")),password:String(formData.get("password")),redirect:false});}catch{return {error:"De combinatie van e-mailadres en wachtwoord is niet geldig."}}redirect("/beheer/nieuws");}
@@ -21,8 +22,18 @@ async function requireAdmin(){const session=await auth();if(!session?.user?.emai
 
 const postSchema=z.object({title:z.string().trim().min(3).max(140),excerpt:z.string().trim().min(10).max(320),content:z.string().min(3),status:z.enum(["draft","published"]),imageAlt:z.string().trim().max(180).optional()});
 function cleanContent(value:string){return sanitizeHtml(value,{allowedTags:["p","h2","h3","strong","em","ul","ol","li","a","br"],allowedAttributes:{a:["href","target","rel"]},allowedSchemes:["http","https","mailto"]});}
-async function uploadImage(file:File|null){if(!file||file.size===0)return null;if(!["image/jpeg","image/png","image/webp"].includes(file.type)||file.size>5*1024*1024)throw new Error("Gebruik een JPG, PNG of WebP van maximaal 5 MB.");if(!process.env.BLOB_READ_WRITE_TOKEN)throw new Error("Afbeeldingsopslag is nog niet gekoppeld.");return put(`nieuws/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g,"-")}`,file,{access:"public",addRandomSuffix:true});}
-export async function savePostAction(_state:ActionState,formData:FormData):Promise<ActionState>{await requireAdmin();const db=getDb();if(!db)return {error:"De database is nog niet gekoppeld."};const parsed=postSchema.safeParse({title:formData.get("title"),excerpt:formData.get("excerpt"),content:formData.get("content"),status:formData.get("status"),imageAlt:formData.get("imageAlt")});if(!parsed.success)return {error:"Controleer de titel, samenvatting en inhoud."};try{const id=String(formData.get("id")||"");const existingSlug=String(formData.get("slug")||"");let slug=existingSlug||slugify(parsed.data.title);const [conflict]=await db.select({id:posts.id}).from(posts).where(eq(posts.slug,slug)).limit(1);if(conflict&&conflict.id!==id)slug=`${slug}-${Date.now().toString().slice(-5)}`;const blob=await uploadImage(formData.get("image") as File|null);const data={title:parsed.data.title,slug,excerpt:parsed.data.excerpt,content:cleanContent(parsed.data.content),imageAlt:parsed.data.imageAlt||null,status:parsed.data.status,imageUrl:blob?.url||String(formData.get("existingImage")||"")||null,publishedAt:parsed.data.status==="published"?new Date():null,updatedAt:new Date()};if(id)await db.update(posts).set(data).where(eq(posts.id,id));else await db.insert(posts).values(data);revalidatePath("/");revalidatePath("/nieuws");}catch(error){return {error:error instanceof Error?error.message:"Opslaan is niet gelukt."}}redirect("/beheer/nieuws");}
+async function uploadedImage(value: FormDataEntryValue | null) {
+  if (!value) return null;
+  if (typeof value !== "string") throw new Error("Ongeldige afbeelding.");
+  const url = new URL(value);
+  if (url.protocol !== "https:" || !/^[a-z0-9-]+\.public\.blob\.vercel-storage\.com$/.test(url.hostname) || !url.pathname.startsWith("/nieuws/")) {
+    throw new Error("Ongeldige afbeelding.");
+  }
+  const blob = await head(value);
+  validateNewsImage({ size: blob.size, type: blob.contentType });
+  return blob;
+}
+export async function savePostAction(_state:ActionState,formData:FormData):Promise<ActionState>{await requireAdmin();const db=getDb();if(!db)return {error:"De database is nog niet gekoppeld."};const parsed=postSchema.safeParse({title:formData.get("title"),excerpt:formData.get("excerpt"),content:formData.get("content"),status:formData.get("status"),imageAlt:formData.get("imageAlt")});if(!parsed.success)return {error:"Controleer de titel, samenvatting en inhoud."};try{const id=String(formData.get("id")||"");const existingSlug=String(formData.get("slug")||"");let slug=existingSlug||slugify(parsed.data.title);const [conflict]=await db.select({id:posts.id}).from(posts).where(eq(posts.slug,slug)).limit(1);if(conflict&&conflict.id!==id)slug=`${slug}-${Date.now().toString().slice(-5)}`;const blob=await uploadedImage(formData.get("uploadedImage"));const data={title:parsed.data.title,slug,excerpt:parsed.data.excerpt,content:cleanContent(parsed.data.content),imageAlt:parsed.data.imageAlt||null,status:parsed.data.status,imageUrl:blob?.url||String(formData.get("existingImage")||"")||null,publishedAt:parsed.data.status==="published"?new Date():null,updatedAt:new Date()};if(id)await db.update(posts).set(data).where(eq(posts.id,id));else await db.insert(posts).values(data);revalidatePath("/");revalidatePath("/nieuws");}catch(error){return {error:error instanceof Error?error.message:"Opslaan is niet gelukt."}}redirect("/beheer/nieuws");}
 export async function deletePostAction(formData:FormData){await requireAdmin();const db=getDb();if(!db)return;const id=String(formData.get("id"));const [post]=await db.select().from(posts).where(eq(posts.id,id)).limit(1);if(post?.imageUrl&&post.imageUrl.includes("blob.vercel-storage.com")){try{await del(post.imageUrl)}catch{}}await db.delete(posts).where(eq(posts.id,id));revalidatePath("/nieuws");redirect("/beheer/nieuws");}
 export async function listAdminPosts(){await requireAdmin();const db=getDb();return db?db.select().from(posts).orderBy(desc(posts.updatedAt)):[]}
 export async function getAdminPost(id:string){await requireAdmin();const db=getDb();if(!db)return null;const [post]=await db.select().from(posts).where(eq(posts.id,id)).limit(1);return post||null}
