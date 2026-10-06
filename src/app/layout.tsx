@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SiteChrome } from "@/components/site-chrome";
+import { SiteAnalytics } from "@/components/site-analytics";
 import { siteConfig } from "@/lib/config";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="nl">
       <body>
         <SiteChrome>{children}</SiteChrome>
+        <SiteAnalytics />
       </body>
     </html>
   );
