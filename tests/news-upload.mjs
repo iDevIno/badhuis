@@ -13,7 +13,7 @@ function load(path, imports, globals = {}) {
   const source = ts.transpileModule(fs.readFileSync(path, 'utf8'), {
     compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
   }).outputText;
-  vm.runInNewContext(source, { exports, require: name => imports[name], Response, File, FormData, URL, Error, ...globals });
+  vm.runInNewContext(source, { exports, require: name => imports[name], Response, File, FormData, URL, Error, AbortController, setTimeout, clearTimeout, ...globals });
   return exports;
 }
 
@@ -76,4 +76,23 @@ test('3.2 MB image uses a real signed client token and bypasses the form payload
     setGlobalDispatcher(previousDispatcher);
     await agent.close();
   }
+});
+
+
+test('a stalled upload releases the form even while the SDK is waiting to retry', async () => {
+  let onDeadline;
+  let signal;
+  const client = load('src/lib/upload-news-image.ts', {
+    '@vercel/blob/client': { put: async (_path, _file, options) => { signal = options.abortSignal; return new Promise(() => {}); } },
+  }, {
+    fetch: async () => Response.json({ clientToken: 'test' }),
+    setTimeout: callback => { onDeadline = callback; return 1; },
+    clearTimeout: () => {},
+  });
+  const pending = client.uploadNewsImage(new File(['test'], 'foto.jpg', { type: 'image/jpeg' }));
+  // Wait for the mocked HTTP response to be parsed, without a real timer delay.
+  for (let i = 0; i < 20 && !signal; i++) await Promise.resolve();
+  onDeadline();
+  await assert.rejects(pending, /duurt te lang/);
+  assert.equal(signal.aborted, true);
 });

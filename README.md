@@ -34,3 +34,14 @@ standaardvragen getoond; opslaan is dan niet mogelijk.
 Voer voor publicatie `npm run db:migrate` uit met de productie-databaseconfiguratie;
 de nieuwe migratie maakt de tabel `site_content` aan. Contactmomenten per arts
 wachten nog op informatie van de praktijk. De hero gebruikt de bestaande sfeerfoto.
+
+## Gebruikersbeheer
+
+Via `/beheer/gebruikers` kunnen ingelogde beheerders extra beheerders aanmaken
+en hun eigen wachtwoord wijzigen na controle van het huidige wachtwoord. Alle
+accounts hebben dezelfde beheerrechten. De bestaande tabel `admins` wordt gebruikt;
+hiervoor is geen nieuwe database-migratie nodig. Deel de inloggegevens zelf met
+de nieuwe gebruiker; er wordt geen uitnodigingsmail verstuurd.
+
+Controle: `node --test tests/user-management.mjs`. Deze tests gebruiken een
+gesimuleerde database en echte wachtwoordhashes; ze wijzigen geen live accounts.
