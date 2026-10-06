@@ -30,7 +30,15 @@ async function uploadedImage(value: FormDataEntryValue | null) {
   if (url.protocol !== "https:" || !/^[a-z0-9-]+\.public\.blob\.vercel-storage\.com$/.test(url.hostname) || !url.pathname.startsWith("/nieuws/")) {
     throw new Error("Ongeldige afbeelding.");
   }
-  const blob = await head(value);
+  // Use the same credentials as the upload route, even when Vercel also injects OIDC.
+  const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
+  if (!token) throw new Error("De foto is geüpload, maar de opslag kan niet worden gecontroleerd: BLOB_READ_WRITE_TOKEN ontbreekt.");
+  let blob;
+  try {
+    blob = await head(value, { token });
+  } catch {
+    throw new Error("De foto is geüpload, maar kon niet worden gecontroleerd. Controleer of BLOB_READ_WRITE_TOKEN bij dezelfde Blob-opslag hoort en probeer opnieuw.");
+  }
   validateNewsImage({ size: blob.size, type: blob.contentType });
   return blob;
 }

@@ -1,34 +1,28 @@
 import Link from "next/link";
+import { clinicSchema, jsonLdText, pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { ArrowRight, Clock3, Info, MapPin } from "lucide-react";
 import { BookingLink } from "@/components/booking-link";
 import { team } from "@/lib/content";
 import { getPublishedPosts } from "@/lib/posts";
 
+export const metadata = pageMetadata(
+  "Huisarts in Sint-Andries, Antwerpen",
+  "Huisarts in Sint-Andries, Antwerpen? Maak een afspraak bij Huisartsenpraktijk Badhuis, Pachtstraat 16, 2000 Antwerpen. Bekijk onze artsen en contactmomenten.",
+  "/",
+);
+
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const news = await getPublishedPosts(3);
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "MedicalClinic",
-    name: "Huisartsenpraktijk Badhuis",
-    telephone: "+32 3 790 12 14",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Pachtstraat 16",
-      postalCode: "2000",
-      addressLocality: "Antwerpen",
-      addressCountry: "BE",
-    },
-    medicalSpecialty: "GeneralPractice",
-  };
+
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: jsonLdText(clinicSchema) }}
       />
 
       <section className="home-photo-hero" aria-label="Huisartsenpraktijk Badhuis">
@@ -94,8 +88,8 @@ export default async function Home() {
 
       <section className="home-about" id="praktijk">
         <div className="container content-grid">
-          <div><h2>Onze praktijk</h2></div>
-          <div className="prose"><p>Huisartsenpraktijk Badhuis is er voor jong en oud in de wijk Sint-Andries in Antwerpen. Onze naam verwijst naar het badhuis dat hier van 1912 tot 1975 dienstdeed als publieke badkamer.</p><p>U kunt bij ons terecht voor algemene en acute zorg, langdurige begeleiding, preventie, vaccinaties en medische administratie. Indien nodig verwijzen we u door naar een specialist.</p><p>In uw globaal medisch dossier houden we onder meer uw medicatie, onderzoeksresultaten en eerdere behandelingen bij.</p></div>
+          <div><h2>Uw huisarts in Sint-Andries</h2></div>
+          <div className="prose"><p>Huisartsenpraktijk Badhuis is een groepspraktijk voor huisartsgeneeskunde aan de Pachtstraat 16, 2000 Antwerpen, in de wijk Sint-Andries. Onze huisartsen zijn er voor jong en oud. Consultaties gebeuren op afspraak. Bekijk <Link href="/team">onze huisartsen</Link> of de <Link href="/bereikbaarheid#contactmomenten">telefonische contactmomenten</Link>.</p><p>Onze naam verwijst naar het badhuis dat hier van 1912 tot 1975 dienstdeed als publieke badkamer.</p><p>U kunt bij ons terecht voor algemene en acute zorg, langdurige begeleiding, preventie, vaccinaties en medische administratie. Indien nodig verwijzen we u door naar een specialist.</p><p>In uw globaal medisch dossier houden we onder meer uw medicatie, onderzoeksresultaten en eerdere behandelingen bij.</p></div>
         </div>
         <div className="container practice-photo-grid">
           <figure>

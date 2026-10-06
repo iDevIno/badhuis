@@ -7,11 +7,16 @@ export async function POST(request: Request) {
     if (!(await auth())?.user?.email) {
       return Response.json({ error: "Uw sessie is verlopen. Meld u opnieuw aan." }, { status: 401 });
     }
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+    const token = process.env.BLOB_READ_WRITE_TOKEN?.trim();
+    if (!token) {
       return Response.json({ error: "Afbeeldingsopslag is nog niet gekoppeld. Koppel Vercel Blob aan dit project en deploy opnieuw." }, { status: 503 });
     }
     const body = (await request.json()) as HandleUploadBody;
+    if (body?.type !== "blob.generate-client-token" || typeof body.payload?.pathname !== "string" || !/^nieuws\/[a-zA-Z0-9._-]+$/.test(body.payload.pathname)) {
+      return Response.json({ error: "Ongeldige uploadaanvraag. Kies de foto opnieuw." }, { status: 400 });
+    }
     const result = await handleUpload({
+      token,
       request,
       body,
       onBeforeGenerateToken: async (pathname) => {
@@ -27,7 +32,10 @@ export async function POST(request: Request) {
       },
     });
     return Response.json(result);
-  } catch {
+  } catch (error) {
+    if (error instanceof Error && /Invalid.*token/i.test(error.message)) {
+      return Response.json({ error: "De ingestelde Blob-token is ongeldig. Vervang BLOB_READ_WRITE_TOKEN door de token van de gekoppelde opslag en deploy opnieuw." }, { status: 503 });
+    }
     return Response.json({ error: "De upload kon niet worden voorbereid. Controleer de Blob-koppeling en BLOB_READ_WRITE_TOKEN in Vercel." }, { status: 400 });
   }
 }

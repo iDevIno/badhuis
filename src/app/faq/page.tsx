@@ -1,9 +1,9 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PageHero } from "@/components/page-hero";
 import { BookingLink } from "@/components/booking-link";
 import { getFaq } from "@/lib/faq";
 import { siteConfig } from "@/lib/config";
-export const metadata: Metadata = { title: "Veelgestelde vragen", description: "Handig om te weten voor uw bezoek aan Huisartsenpraktijk Badhuis.", alternates: { canonical: "/faq" } };
+export const metadata = pageMetadata("Veelgestelde vragen", "Antwoorden over afspraken en uw bezoek aan Huisartsenpraktijk Badhuis in Sint-Andries, Antwerpen.", "/faq");
 export const dynamic = "force-dynamic";
 export default async function Faq() {
   const items = await getFaq();

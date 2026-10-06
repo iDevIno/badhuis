@@ -11,5 +11,10 @@ export async function uploadNewsImage(file: File) {
   if (!response.ok || typeof result?.clientToken !== "string") {
     throw new Error(typeof result?.error === "string" ? result.error : "De foto-upload is niet bereikbaar. Vernieuw de pagina en meld u zo nodig opnieuw aan.");
   }
-  return put(pathname, file, { access: "public", contentType: file.type, token: result.clientToken });
+  try {
+    return await put(pathname, file, { access: "public", contentType: file.type, token: result.clientToken });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Onbekende uploadfout.";
+    throw new Error(`De foto kon niet naar Blob worden geüpload. ${message}`);
+  }
 }

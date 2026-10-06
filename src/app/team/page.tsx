@@ -1,14 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Phone } from "lucide-react";
 import { BookingLink } from "@/components/booking-link";
 import { PageHero } from "@/components/page-hero";
 import { team } from "@/lib/content";
 import { siteConfig } from "@/lib/config";
 
-export const metadata: Metadata = {
-  title: "Ons team",
-  description: "De huisartsen en praktijkmedewerkers van Huisartsenpraktijk Badhuis.",
-};
+export const metadata = pageMetadata("Huisartsen in Sint-Andries", "Maak kennis met Wout Van De Leest, Bert Janssens, Juliette Melizan en Levi Van Winckel, huisartsen bij Badhuis in Sint-Andries, Antwerpen.", "/team");
 
 export default function Team() {
   return (

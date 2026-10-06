@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import { AlertCircle, Clock3, ExternalLink, MapPin, Phone } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
@@ -6,11 +6,7 @@ import { BookingLink } from "@/components/booking-link";
 import { siteConfig } from "@/lib/config";
 import { team } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Bereikbaarheid",
-  description: "Contactgegevens, openingsuren, wachtpost en contactmomenten per arts bij Huisartsenpraktijk Badhuis.",
-  alternates: { canonical: "/bereikbaarheid" },
-};
+export const metadata = pageMetadata("Contact en bereikbaarheid in Antwerpen", "Huisartsenpraktijk Badhuis, Pachtstraat 16, 2000 Antwerpen, wijk Sint-Andries. Bekijk openingsuren, telefoonnummers en contactmomenten per arts.", "/bereikbaarheid");
 
 export default function Bereikbaarheid() {
   return <>
