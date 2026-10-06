@@ -10,7 +10,6 @@ type TeamMember = {
     shortHours?: string;
     phone?: string;
     phoneHref?: string;
-    voicemail?: string;
     absence?: string;
     appointments?: string[];
   };
@@ -49,7 +48,6 @@ export const team: TeamMember[] = [
       shortHours: "Ma, di, do, vr · 12.00–12.30 uur",
       phone: "0491 63 04 03",
       phoneHref: "tel:+32491630403",
-      voicemail: "Laat geen voicemailbericht achter. Voicemailberichten worden niet beluisterd.",
       absence: "Op woensdag niet aanwezig in de praktijk.",
     },
   },

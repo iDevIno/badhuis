@@ -27,7 +27,6 @@ export default function Team() {
                     {member.contact?.phone ?? siteConfig.phone}
                   </a>
                   <p>{member.contact?.shortHours ?? "Praktijknummer"}</p>
-                  {member.contact?.voicemail && <p>Geen voicemail achterlaten.</p>}
                 </div>
                 {member.role === "Huisarts" && (
                   member.onlineBookingAvailable ? (

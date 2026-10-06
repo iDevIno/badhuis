@@ -4,7 +4,7 @@ import { useActionState, useRef, useState } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import LinkExtension from "@tiptap/extension-link";
-import { upload } from "@vercel/blob/client";
+import { uploadNewsImage } from "@/lib/upload-news-image";
 import { validatePost } from "@/lib/post-validation";
 import { prepareNewsImage } from "@/lib/news-image";
 import { savePostAction, type ActionState } from "@/lib/admin-actions";
@@ -24,11 +24,7 @@ export function PostEditor({post={}}:{post?:PostInput}){const uploaded = useRef<
       await prepareNewsImage(data, async (file) => {
         if (uploaded.current?.file === file) return uploaded.current.url;
         setUploading(true);
-        const blob = await upload(`nieuws/${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, "-")}`, file, {
-          access: "public",
-          handleUploadUrl: "/api/nieuws/upload",
-          contentType: file.type,
-        });
+        const blob = await uploadNewsImage(file);
         uploaded.current = { file, url: blob.url };
         setUploadedUrl(blob.url);
         return blob.url;

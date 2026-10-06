@@ -26,6 +26,7 @@ export default function Bereikbaarheid() {
       <div className="container reach-heading">
         <h2 id="contactmomenten-title">Contactmomenten per arts</h2>
         <p>Hier vindt u de telefonische bereikbaarheid per arts.</p>
+        <p><strong>Voicemail:</strong> laat geen voicemailbericht achter. Voicemailberichten worden niet beluisterd.</p>
       </div>
       <div className="container content-grid">
         <div>
@@ -40,10 +41,6 @@ export default function Bereikbaarheid() {
                 {member.contact && <div>
                   <dt>Belmomenten</dt>
                   <dd>{member.contact.shortHours ?? member.contact.hours}</dd>
-                </div>}
-                {member.contact?.voicemail && <div>
-                  <dt>Voicemail</dt>
-                  <dd>{member.contact.voicemail}</dd>
                 </div>}
                 {member.contact?.absence && <div>
                   <dt>Aanwezigheid</dt>
