@@ -22,3 +22,5 @@
 @media(max-width:1000px){.user-forms{grid-template-columns:1fr}}
 
 .admin-app .editor-image-preview{display:block;width:100%;height:auto;max-height:240px;object-fit:contain;border:1px solid var(--admin-line);border-radius:4px;background:#f9fafb;margin-bottom:12px}
+
+.admin-news-actions{display:flex;align-items:center;gap:18px}.admin-delete-link{display:inline-flex;align-items:center;gap:7px;border:0;background:none;color:#9d3023;font:inherit;cursor:pointer;padding:6px 0}.admin-app .delete-dialog{margin:auto;width:min(460px,calc(100% - 32px));padding:28px;border:1px solid var(--admin-line);border-radius:8px;background:#fff;color:#333d46;box-shadow:0 20px 70px #0003;white-space:normal}.delete-dialog::backdrop{background:rgba(20,33,45,.5)}.admin-app .delete-dialog h2{font-size:20px;margin-bottom:12px}.delete-dialog p{font-size:14px;line-height:1.65;overflow-wrap:anywhere}.delete-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;margin-top:24px}
