@@ -163,7 +163,6 @@
 .doctor-contact-details dt{font-size:.86rem;font-weight:600;color:var(--sage-700);padding-top:2px}
 .doctor-contact-details dd{margin:0}
 .doctor-contact-details a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:#b3c0b5;white-space:nowrap}
-.doctor-contact-details ul{margin:0;padding-left:18px}
-.doctor-contact-details li+li{margin-top:6px}
-.doctor-contact-details dd p{margin-top:10px}
+.doctor-contact-details dd p{margin:0}
+.doctor-contact-details dd p+p{margin-top:10px}
 @media(max-width:650px){.doctor-contact-details>div{grid-template-columns:1fr;gap:2px;margin-top:14px}}

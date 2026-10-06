@@ -23,7 +23,7 @@ export default function Team() {
                   <a href={member.contact?.phoneHref ?? siteConfig.phoneHref}>
                     {member.contact?.phone ?? siteConfig.phone}
                   </a>
-                  <p>{member.contact?.shortHours ?? "Praktijknummer"}</p>
+                  <p>{member.contact?.shortHours ?? "Onthaal"}</p>
                 </div>
                 {member.role === "Huisarts" && (
                   member.onlineBookingAvailable ? (

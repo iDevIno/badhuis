@@ -30,11 +30,11 @@ export default function Bereikbaarheid() {
             <article className="doctor-contact" key={member.name}>
               <h3>{member.name}</h3>
               <dl className="doctor-contact-details">
-                <div>
-                  <dt>{member.contact?.phone ? "Telefoon" : "Praktijknummer"}</dt>
+                {(member.contact?.phone || !member.contact?.appointments) && <div>
+                  <dt>{member.contact?.phone ? "Telefoon" : "Onthaal"}</dt>
                   <dd><a href={member.contact?.phoneHref ?? siteConfig.phoneHref}>{member.contact?.phone ?? siteConfig.phone}</a></dd>
-                </div>
-                {member.contact && <div>
+                </div>}
+                {(member.contact?.shortHours || member.contact?.hours) && <div>
                   <dt>Belmomenten</dt>
                   <dd>{member.contact.shortHours ?? member.contact.hours}</dd>
                 </div>}
@@ -45,8 +45,8 @@ export default function Bereikbaarheid() {
                 {member.contact?.appointments && <div>
                   <dt>Afspraken</dt>
                   <dd>
-                    <ul>{member.contact.appointments.map(instruction => <li key={instruction}>{instruction}</li>)}</ul>
-                    <p>Praktijknummer: <a href={siteConfig.phoneHref}>{siteConfig.phone}</a></p>
+                    {member.contact.appointments.map(instruction => <p key={instruction}>{instruction}</p>)}
+                    <p>Onthaal: <a href={siteConfig.phoneHref}>{siteConfig.phone}</a></p>
                   </dd>
                 </div>}
               </dl>

@@ -6,7 +6,7 @@ type TeamMember = {
   bookingUrl: string;
   onlineBookingAvailable: boolean;
   contact?: {
-    hours: string;
+    hours?: string;
     shortHours?: string;
     phone?: string;
     phoneHref?: string;
@@ -29,13 +29,15 @@ export const team: TeamMember[] = [
       phone: "0477 48 63 73",
       phoneHref: "tel:+32477486373",
       appointments: [
-        "Via de online agenda of het praktijknummer, ook tijdens het dagelijkse telefoonmoment.",
+        "Via de online agenda of het onthaal, ook tijdens het dagelijkse telefoonmoment.",
       ],
     },
   },
   { name: "Bert Janssens",
     bookingUrl: "https://progenda.be/calendars/dokter-janssens-bert-huisarts-antwerpen?locale=nl",
-    onlineBookingAvailable: true, role: "Huisarts", detail: "Algemene geneeskunde", image: "/images/team/avatar.svg" },
+    onlineBookingAvailable: true, role: "Huisarts", detail: "Algemene geneeskunde", image: "/images/team/avatar.svg",
+    contact: { appointments: ["Via het onthaal."] },
+  },
   {
     name: "Juliette Melizan",
     bookingUrl: "https://progenda.be/calendars/docteur-melizan-juliette-medecine-generale-antwerpen?locale=nl",
@@ -49,11 +51,16 @@ export const team: TeamMember[] = [
       phone: "0491 63 04 03",
       phoneHref: "tel:+32491630403",
       absence: "Op woensdag niet aanwezig in de praktijk.",
+      appointments: ["Via de online agenda of het onthaal, ook tijdens de telefoonmomenten."],
     },
   },
   { name: "Levi Van Winckel",
     bookingUrl: "https://progenda.be/calendars/dokter-van-winckel-levi-antwerpen?locale=nl",
-    onlineBookingAvailable: true, role: "Huisarts", detail: "Algemene geneeskunde", image: "/images/team/avatar.svg" },
+    onlineBookingAvailable: true, role: "Huisarts", detail: "Algemene geneeskunde", image: "/images/team/avatar.svg",
+    contact: {
+      appointments: ["Via de online agenda of het onthaal."],
+    },
+  },
 ];
 
 export const demoPosts = [
