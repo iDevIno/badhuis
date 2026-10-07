@@ -13,11 +13,10 @@ export default function Bereikbaarheid() {
     <PageHero title="Bereikbaarheid" intro="Hier vindt u onze openingsuren, contactgegevens en informatie over de wachtpost." />
     <nav className="container reach-nav" aria-label="Op deze pagina">
       <a href="#contact">Contact</a>
-      <a href="#wachtpost">Wachtpost</a>
       <a href="#contactmomenten">Contactmomenten per arts</a>
+      <a href="#wachtpost">Wachtpost</a>
     </nav>
     <section className="section reach-section" id="contact" aria-label="Contact"><div className="container contact-grid"><div className="contact-panel"><h2>Praktijkgegevens</h2><div className="contact-row"><MapPin/><div><span>Adres</span>{siteConfig.address}</div></div><div className="contact-row"><Phone/><div><span>Telefoon</span><a href={siteConfig.phoneHref}>{siteConfig.phone}</a></div></div><div className="contact-row"><Clock3/><div style={{width:"100%"}}><span>Openingsuren</span><table className="hours-table"><tbody>{siteConfig.hours.map(([d,h])=><tr key={d}><td>{d}</td><td>{h}</td></tr>)}</tbody></table></div></div></div><figure className="practice-entrance"><div className="practice-entrance-photo"><Image src="/images/praktijk/ingang.webp" alt="De ingang van Huisartsenpraktijk Badhuis: een groene deur naast het rode kruis aan de bakstenen gevel" fill sizes="(max-width: 960px) calc(100vw - 40px), 50vw" /></div><figcaption>De ingang van onze praktijk aan {siteConfig.address}.<span>Fotografie: Katie Verkinderen</span></figcaption></figure></div></section>
-    <section className="section reach-section" id="wachtpost" aria-labelledby="wachtpost-title"><div className="container reach-heading"><h2 id="wachtpost-title">Wachtpost</h2><p>Medische hulp buiten de openingsuren.</p></div><div className="container content-grid"><article className="prose"><h3>Wanneer belt u de wachtpost?</h3><p>Bel 1733 voor een dringend medisch probleem dat niet kan wachten tot het spreekuur van uw eigen huisarts. Een medewerker beoordeelt uw oproep en vertelt waar u terechtkunt.</p><h3>Bij levensgevaar</h3><p>Bij een levensbedreigende noodsituatie belt u onmiddellijk 112.</p></article><aside className="info-card"><AlertCircle size={28}/><h3>Huisartsenwachtpost Brabo</h3><p><MapPin size={17}/> Sint-Vincentiusstraat 20, 2018 Antwerpen</p><a className="button button-primary" href="tel:1733"><Phone size={18}/>Bel 1733</a><a className="text-link" href="https://www.huisartsenminerva.be/" target="_blank" rel="noreferrer">Website wachtpost <ExternalLink size={15}/></a></aside></div></section>
     <section className="section reach-section" id="contactmomenten" aria-labelledby="contactmomenten-title">
       <div className="container reach-heading">
         <h2 id="contactmomenten-title">Contactmomenten per arts</h2>
@@ -60,5 +59,6 @@ export default function Bereikbaarheid() {
         </aside>
       </div>
     </section>
+    <section className="section reach-section" id="wachtpost" aria-labelledby="wachtpost-title"><div className="container reach-heading"><h2 id="wachtpost-title">Wachtpost</h2><p>Medische hulp buiten de openingsuren.</p></div><div className="container content-grid"><article className="prose"><h3>Wanneer belt u de wachtpost?</h3><p>Bel 1733 voor een dringend medisch probleem dat niet kan wachten tot het spreekuur van uw eigen huisarts. Een medewerker beoordeelt uw oproep en vertelt waar u terechtkunt.</p><h3>Bij levensgevaar</h3><p>Bij een levensbedreigende noodsituatie belt u onmiddellijk 112.</p></article><aside className="info-card"><AlertCircle size={28}/><h3>Huisartsenwachtpost Brabo</h3><p><MapPin size={17}/> Sint-Vincentiusstraat 20, 2018 Antwerpen</p><a className="button button-primary" href="tel:1733"><Phone size={18}/>Bel 1733</a><a className="text-link" href="https://www.huisartsenminerva.be/" target="_blank" rel="noreferrer">Website wachtpost <ExternalLink size={15}/></a></aside></div></section>
   </>;
 }
