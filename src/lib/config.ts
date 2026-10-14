@@ -3,8 +3,8 @@ export const siteConfig = {
   shortName: "Badhuis",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://huisartsenpraktijkbadhuis.be").replace(/\/+$/, ""),
   bookingUrl: process.env.NEXT_PUBLIC_BOOKING_URL || "https://progenda.be/centers/van-de-leest-wout?locale=nl",
-  phone: "03 790 12 14",
-  phoneHref: "tel:+3237901214",
+  phone: "03 231 34 36",
+  phoneHref: "tel:+3232313436",
   address: "Pachtstraat 16, 2000 Antwerpen",
   hours: [
     ["Maandag – vrijdag", "08:00 – 18:00"],
